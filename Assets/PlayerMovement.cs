@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float playerMoveSpeed = 3f;
-    private float rotationY = 180f;
+    private float rotationY = -90f;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetAxisRaw("Horizontal") > 0 )
         {
-            rb.rotation = Quaternion.Euler(0, 0, 0);
+            rb.rotation = Quaternion.Euler(0, -rotationY, 0);
         } else if (Input.GetAxisRaw("Horizontal") < 0)
         {
             rb.rotation = Quaternion.Euler(0, rotationY, 0);
