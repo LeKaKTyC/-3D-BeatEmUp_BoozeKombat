@@ -10,6 +10,7 @@ public class CharacterState : MonoBehaviour
     {
         currentState = state;
     }
+
 }
 public enum CharacterStates
 {
@@ -17,4 +18,5 @@ public enum CharacterStates
     PUNCH, KICK, JUMPKICK, GROUNDKICK,
     ATTACK, DEFEND, HIT, DEATH, GROUNDHIT, KNOCKDOWN,
     THROW, PICKUPITEM,
+
 }
