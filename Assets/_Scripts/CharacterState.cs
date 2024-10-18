@@ -11,11 +11,12 @@ public class CharacterState : MonoBehaviour
         currentState = state;
     }
 
-    public enum CharacterStates
-    {
-        IDLE, WALK, RUN, JUMP, STANDUP,
-        PUNCH, KICK, JUMPKICK, GROUNDKICK,
-        ATTACK, DEFEND, HIT, DEATH, GROUNDHIT, KNOCKDOWN,
-        THROW,PICKUPITEM,
-    }
+}
+public enum CharacterStates
+{
+    IDLE, WALK, RUN, JUMP, STANDUP,
+    PUNCH, KICK, JUMPKICK, GROUNDKICK,
+    ATTACK, DEFEND, HIT, DEATH, GROUNDHIT, KNOCKDOWN,
+    THROW, PICKUPITEM,
+
 }
