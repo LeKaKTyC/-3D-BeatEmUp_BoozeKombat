@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed = 3f;
     public float runSpeed = 6f;
     public float ZSpeed = 1.5f;
-    public float JumpForce = 8f;
+    public float JumpForce = 4f;
     public bool AllowDepthJumping;
     public float AirAcceleration = 3f;
     public float AirMaxSpeed = 3f;
@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
         //air and ground Movement
         bool isGrounded = IsGrounded();
         animator.SetAnimatorBool("isGrounded", isGrounded);
-        if (isGrounded) animator.SetAnimatorBool("Jump", false);
+        if (isGrounded) animator.SetAnimatorBool("Falling", false);
 
         if (isGrounded)
         {
@@ -197,11 +197,11 @@ public class PlayerMovement : MonoBehaviour
         jumpInProgress = true;
         rb.velocity = Vector3.up * JumpForce;
 
-        ////play animation
-        //animator.SetAnimatorBool("JumpInProgress", true);
-        //animator.SetAnimatorBool("Run", false);
-        //animator.SetAnimatorTrigger("JumpUp");
-        //animator.ShowDustEffectJump();
+        //play animation
+        animator.SetAnimatorBool("JumpInProgress", true);
+        animator.SetAnimatorBool("Run", false);
+        animator.SetAnimatorTrigger("JumpUp");
+        animator.ShowDustEffectJump();
 
         //play sfx
         //if (jumpUpVoice != "") GlobalAudioPlayer.PlaySFXAtPosition(jumpUpVoice, transform.position);
