@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDead = false;
     private bool JumpNextFixedUpdate;
-    private float jumpDownwardsForce = .3f;
+    private float jumpDownwardsForce = .2f;
 
     //a list of states where movement can take place
     private List<CharacterStates> MovementStates = new List<CharacterStates> {
@@ -201,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetAnimatorBool("JumpInProgress", true);
         animator.SetAnimatorBool("Run", false);
         animator.SetAnimatorTrigger("JumpUp");
-        animator.ShowDustEffectJump();
+        //animator.ShowDustEffectJump();
 
         //play sfx
         //if (jumpUpVoice != "") GlobalAudioPlayer.PlaySFXAtPosition(jumpUpVoice, transform.position);
@@ -220,7 +220,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetAnimatorBool("JumpInProgress", false);
         animator.SetAnimatorBool("JumpKickActive", false);
         animator.SetAnimatorBool("Falling", false);
-        animator.ShowDustEffectLand();
+        //animator.ShowDustEffectLand();
 
         //sfx
         //GlobalAudioPlayer.PlaySFX("FootStep");
