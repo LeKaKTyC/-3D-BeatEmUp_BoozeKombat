@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 public class UnitAnimator : MonoBehaviour
@@ -55,51 +54,51 @@ public class UnitAnimator : MonoBehaviour
     //-------------------------
 
     //Animation has finished playing, unit is ready for new input
-    //public void Ready()
-    //{
-    //    if (isplayer)
-    //    {
-    //        transform.parent.GetComponent<PlayerCombat>().Ready();
-    //    }
-    //    else
-    //    {
-    //        transform.parent.GetComponent<EnemyAI>().Ready();
-    //    }
-    //}
+    public void Ready()
+    {
+        if (isplayer)
+        {
+            transform.parent.GetComponent<PlayerCombat>().Ready();
+        }
+        else
+        {
+            transform.parent.GetComponent<EnemyAI>().Ready();
+        }
+    }
 
     //check if something was hit
-    //public void Check4Hit()
-    //{
+    public void Check4Hit()
+    {
 
-    //    //check if the player has hit something
-    //    if (isplayer)
-    //    {
-    //        PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
-    //        if (playerCombat != null)
-    //        {
-    //            playerCombat.CheckForHit();
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("no player combat component found on gameObject '" + transform.parent.name + "'.");
-    //        }
+        //check if the player has hit something
+        if (isplayer)
+        {
+            PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
+            if (playerCombat != null)
+            {
+                playerCombat.CheckForHit();
+            }
+            else
+            {
+                Debug.Log("no player combat component found on gameObject '" + transform.parent.name + "'.");
+            }
 
-    //    }
-    //    else
-    //    {
+        }
+        else
+        {
 
-    //        //check if the enemy has hit something
-    //        EnemyAI AI = transform.parent.GetComponent<EnemyAI>();
-    //        if (AI != null)
-    //        {
-    //            AI.CheckForHit();
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("no enemy AI component found on gameObject '" + transform.parent.name + "'.");
-    //        }
-    //    }
-    //}
+            //check if the enemy has hit something
+            EnemyAI AI = transform.parent.GetComponent<EnemyAI>();
+            if (AI != null)
+            {
+                AI.CheckForHit();
+            }
+            else
+            {
+                Debug.Log("no enemy AI component found on gameObject '" + transform.parent.name + "'.");
+            }
+        }
+    }
 
     //show hit effect
     public void ShowHitEffect()
@@ -129,7 +128,7 @@ public class UnitAnimator : MonoBehaviour
     //play audio
     public void PlaySFX(string sfxName)
     {
-        //GlobalAudioPlayer.PlaySFXAtPosition(sfxName, transform.position + Vector3.up);
+        GlobalAudioPlayer.PlaySFXAtPosition(sfxName, transform.position + Vector3.up);
     }
 
     //adds a small forward force to this unit
@@ -181,39 +180,40 @@ public class UnitAnimator : MonoBehaviour
         Destroy(transform.parent.gameObject);
     }
 
-    //camera shake
+    ////camera shake
     //public void CamShake(float intensity)
     //{
     //    CamShake camShake = Camera.main.GetComponent<CamShake>();
     //    if (camShake != null)
     //        camShake.Shake(intensity);
     //}
-
-    //spawn a projectile
-    //public void SpawnProjectile(string name)
-    //{
-
-    //    PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
-    //    if (playerCombat)
-    //    {
-
-    //        //find a custom spawn position, if there is any. Otherwise use the weapon hand as spawn position
-    //        Vector3 spawnPos = playerCombat.weaponBone.transform.position;
-    //        ProjectileSpawnPos customSpawnPos = playerCombat.weaponBone.GetComponentInChildren<ProjectileSpawnPos>();
-    //        if (customSpawnPos) spawnPos = customSpawnPos.transform.position;
-
-    //        //spawn projectile at spawn position
-    //        GameObject projectilePrefab = GameObject.Instantiate(Resources.Load(name), spawnPos, Quaternion.identity) as GameObject;
-    //        if (!projectilePrefab) return;
-
-    //        //set projectile to current direction
-    //        Projectile projectileComponent = projectilePrefab.GetComponent<Projectile>();
-    //        if (projectileComponent)
-    //        {
-    //            projectileComponent.direction = playerCombat.currentDirection;
-    //            Weapon currentWeapon = playerCombat.GetCurrentWeapon();
-    //            if (currentWeapon != null) projectileComponent.SetDamage(playerCombat.GetCurrentWeapon().damageObject);
-    //        }
-    //    }
-    //}
 }
+
+//    //spawn a projectile
+//    public void SpawnProjectile(string name)
+//    {
+
+//        PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
+//        if (playerCombat)
+//        {
+
+//            //find a custom spawn position, if there is any. Otherwise use the weapon hand as spawn position
+//            Vector3 spawnPos = playerCombat.weaponBone.transform.position;
+//            ProjectileSpawnPos customSpawnPos = playerCombat.weaponBone.GetComponentInChildren<ProjectileSpawnPos>();
+//            if (customSpawnPos) spawnPos = customSpawnPos.transform.position;
+
+//            //spawn projectile at spawn position
+//            GameObject projectilePrefab = GameObject.Instantiate(Resources.Load(name), spawnPos, Quaternion.identity) as GameObject;
+//            if (!projectilePrefab) return;
+
+//            //set projectile to current direction
+//            Projectile projectileComponent = projectilePrefab.GetComponent<Projectile>();
+//            if (projectileComponent)
+//            {
+//                projectileComponent.direction = playerCombat.currentDirection;
+//                Weapon currentWeapon = playerCombat.GetCurrentWeapon();
+//                if (currentWeapon != null) projectileComponent.SetDamage(playerCombat.GetCurrentWeapon().damageObject);
+//            }
+//        }
+//    }
+//}

@@ -4,19 +4,37 @@ using UnityEngine;
 
 public class CharacterState : MonoBehaviour
 {
-    public CharacterStates currentState = CharacterStates.IDLE;
+    public CHARACTERSTATES currentState = CHARACTERSTATES.IDLE;
 
-    public void SetState(CharacterStates state)
+    public void SetState(CHARACTERSTATES state)
     {
         currentState = state;
     }
 
 }
-public enum CharacterStates
+public enum CHARACTERSTATES
 {
-    IDLE, WALK, RUN, JUMP, STANDUP,
-    PUNCH, KICK, JUMPKICK, GROUNDKICK,
-    ATTACK, DEFEND, HIT, DEATH, GROUNDHIT, KNOCKDOWN,
-    THROW, PICKUPITEM,
+    IDLE,
+    WALK,
+    RUN,
+    JUMPING,
+    JUMP,
+    LAND,
+    JUMPKICK,
+    PUNCH,
+    KICK,
+    ATTACK,
+    DEFEND,
+    HIT,
+    DEATH,
+    THROW,
+    PICKUPITEM,
+    KNOCKDOWN,
+    KNOCKDOWNGROUNDED,
+    GROUNDPUNCH,
+    GROUNDKICK,
+    GROUNDHIT,
+    STANDUP,
+    USEWEAPON,
 
-}
+};

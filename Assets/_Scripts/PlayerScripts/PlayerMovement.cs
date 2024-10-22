@@ -44,13 +44,13 @@ public class PlayerMovement : MonoBehaviour
     private float jumpDownwardsForce = .2f;
 
     //a list of states where movement can take place
-    private List<CharacterStates> MovementStates = new List<CharacterStates> {
-        CharacterStates.IDLE,
-        CharacterStates.WALK,
-        CharacterStates.RUN,
-        CharacterStates.JUMP,
-        CharacterStates.JUMPKICK,
-        CharacterStates.DEFEND,
+    private List<CHARACTERSTATES> MovementStates = new List<CHARACTERSTATES> {
+        CHARACTERSTATES.IDLE,
+        CHARACTERSTATES.WALK,
+        CHARACTERSTATES.RUN,
+        CHARACTERSTATES.JUMP,
+        CHARACTERSTATES.JUMPKICK,
+        CHARACTERSTATES.DEFEND,
     };
 
     //--
@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         if (!MovementStates.Contains(playerState.currentState) || isDead) return;
 
         //defend
-        if (playerState.currentState == CharacterStates.DEFEND)
+        if (playerState.currentState == CHARACTERSTATES.DEFEND)
         {
             TurnToCurrentDirection();
             return;
@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //A short recovery time after landing
-        if (playerState.currentState == CharacterStates.JUMP && Time.time - landTime > landRecoveryTime) playerState.SetState(CharacterStates.IDLE);
+        if (playerState.currentState == CHARACTERSTATES.JUMP && Time.time - landTime > landRecoveryTime) playerState.SetState(CHARACTERSTATES.IDLE);
 
         //air and ground Movement
         bool isGrounded = IsGrounded();
@@ -135,14 +135,14 @@ public class PlayerMovement : MonoBehaviour
     {
 
         //do nothing when landing
-        if (playerState.currentState == CharacterStates.JUMP) return;
+        if (playerState.currentState == CHARACTERSTATES.JUMP) return;
 
         //move when there is no wall in front of us and input is detected
         if (rb != null && (inputDirection.sqrMagnitude > 0 && !WallInFront()))
         {
 
             //set movement speed to run speed or walk speed depending on the current state
-            float movementSpeed = playerState.currentState == CharacterStates.RUN ? runSpeed : walkSpeed;
+            float movementSpeed = playerState.currentState == CHARACTERSTATES.RUN ? runSpeed : walkSpeed;
 
             rb.velocity = new Vector3(inputDirection.x * -movementSpeed, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, inputDirection.y * -ZSpeed);
             if (animator) animator.SetAnimatorFloat("MovementSpeed", rb.velocity.magnitude);
@@ -155,11 +155,11 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(0, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, 0);
 
             if (animator) animator.SetAnimatorFloat("MovementSpeed", 0);
-            playerState.SetState(CharacterStates.IDLE);
+            playerState.SetState(CHARACTERSTATES.IDLE);
         }
 
         //sets the run state in the animator to true or false
-        animator.SetAnimatorBool("Run", playerState.currentState == CharacterStates.RUN);
+        animator.SetAnimatorBool("Run", playerState.currentState == CHARACTERSTATES.RUN);
     }
 
     //movement in the air
@@ -167,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         //falling down
-        if (rb.velocity.y < 0.1f && playerState.currentState != CharacterStates.KNOCKDOWN) animator.SetAnimatorBool("Falling", true);
+        if (rb.velocity.y < 0.1f && playerState.currentState != CHARACTERSTATES.KNOCKDOWN) animator.SetAnimatorBool("Falling", true);
 
         if (!WallInFront())
         {
@@ -192,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
     //perform a jump
     void Jump()
     {
-        playerState.SetState(CharacterStates.JUMP);
+        playerState.SetState(CHARACTERSTATES.JUMP);
         JumpNextFixedUpdate = false;
         jumpInProgress = true;
         rb.velocity = Vector3.up * JumpForce;
@@ -201,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetAnimatorBool("JumpInProgress", true);
         animator.SetAnimatorBool("Run", false);
         animator.SetAnimatorTrigger("JumpUp");
-        //animator.ShowDustEffectJump();
+        animator.ShowDustEffectJump();
 
         //play sfx
         //if (jumpUpVoice != "") GlobalAudioPlayer.PlaySFXAtPosition(jumpUpVoice, transform.position);
@@ -211,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
     void HasLanded()
     {
         jumpInProgress = false;
-        playerState.SetState(CharacterStates.IDLE);
+        playerState.SetState(CHARACTERSTATES.IDLE);
         rb.velocity = Vector2.zero;
         landTime = Time.time;
 
@@ -220,7 +220,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetAnimatorBool("JumpInProgress", false);
         animator.SetAnimatorBool("JumpKickActive", false);
         animator.SetAnimatorBool("Falling", false);
-        //animator.ShowDustEffectLand();
+        animator.ShowDustEffectLand();
 
         //sfx
         //GlobalAudioPlayer.PlaySFX("FootStep");
@@ -242,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
         inputDirection = dir;
 
         //start running on double tap
-        if (doubleTapActive && IsGrounded() && Mathf.Abs(dir.x) > 0) playerState.SetState(CharacterStates.RUN);
+        if (doubleTapActive && IsGrounded() && Mathf.Abs(dir.x) > 0) playerState.SetState(CHARACTERSTATES.RUN);
     }
 
     //input actions
@@ -253,10 +253,10 @@ public class PlayerMovement : MonoBehaviour
         if (!MovementStates.Contains(playerState.currentState) || isDead) return;
 
         //start a jump
-        if (action == "Jump" && buttonState == BUTTONSTATE.PRESS && IsGrounded() && playerState.currentState != CharacterStates.JUMP) JumpNextFixedUpdate = true;
+        if (action == "Jump" && buttonState == BUTTONSTATE.PRESS && IsGrounded() && playerState.currentState != CHARACTERSTATES.JUMP) JumpNextFixedUpdate = true;
 
         //start running when a run button is pressed (e.g. Joypad controls)
-        if (action == "Run") playerState.SetState(CharacterStates.RUN);
+        if (action == "Run") playerState.SetState(CHARACTERSTATES.RUN);
     }
 
     #endregion

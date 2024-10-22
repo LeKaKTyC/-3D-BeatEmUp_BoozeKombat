@@ -13,7 +13,7 @@ public class CameraFollow : MonoBehaviour
     [Header("Follow Settings")]
     public float distanceToTarget = 10; // The distance to the target
     public float heightOffset = -2; // the height offset of the camera relative to it's target
-    public float viewAngle = -6; //a downwards rotation
+    public float viewAngle = -6f; //a downwards rotation
     public Vector3 AdditionalOffset; //any additional offset
     public bool FollowZAxis; //enable or disable the camera following the z axis
 
@@ -91,7 +91,7 @@ public class CameraFollow : MonoBehaviour
             }
 
             //Set cam rotation
-            transform.rotation = new Quaternion(0, 0, 0, 0);
+            transform.rotation = new Quaternion(0, 180f, viewAngle, 0);
         }
     }
 

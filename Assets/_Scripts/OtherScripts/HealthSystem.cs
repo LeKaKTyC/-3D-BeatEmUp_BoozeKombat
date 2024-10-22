@@ -16,6 +16,7 @@ public class HealthSystem : MonoBehaviour
     private void Start()
     {
         HealthUpdate();
+        
     }
     
     public void AddHealth(int amount)
