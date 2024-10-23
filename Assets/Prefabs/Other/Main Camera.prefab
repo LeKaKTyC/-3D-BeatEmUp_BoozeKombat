@@ -150,18 +150,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392e7e8e8bf4d724d9e6cf19e15ec539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MiddlePosition: {x: 0, y: 0, z: 0}
+  MiddlePosition: {x: 96.01025, y: -0.014999986, z: -2.3}
   targetPlayer: {fileID: 0}
-  distanceToTarget: -4.42
-  heightOffset: -2
-  viewAngle: -6
+  distanceToTarget: 3.89
+  heightOffset: -3.55
+  viewAngle: -31.6
   AdditionalOffset: {x: 0, y: 0, z: 0}
   FollowZAxis: 0
   DampX: 5
   DampY: 5
   DampZ: 5
-  MinLeft: 80
-  MaxRight: -96
-  UseWaveAreaCollider: 0
+  MinLeft: 95
+  MaxRight: -76
+  UseWaveAreaCollider: 1
   CurrentAreaCollider: {fileID: 0}
-  AreaColliderViewOffset: 0
+  AreaColliderViewOffset: 4.57

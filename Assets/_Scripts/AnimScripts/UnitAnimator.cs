@@ -13,13 +13,14 @@ public class UnitAnimator : MonoBehaviour
     public GameObject DustEffectJump;
     public GameObject HitEffect;
     public GameObject DefendEffect;
-    [HideInInspector]
+    
     public Animator animator;
-    private bool isplayer;
+    public bool isplayer;
 
     //awake
     void Awake()
     {
+        
         if (animator == null) animator = GetComponent<Animator>();
         isplayer = transform.parent.CompareTag("Player");
         currentDirection = DIRECTION.Right;
@@ -58,10 +59,12 @@ public class UnitAnimator : MonoBehaviour
     {
         if (isplayer)
         {
+            Debug.Log("Player is ready for new input");
             transform.parent.GetComponent<PlayerCombat>().Ready();
         }
         else
         {
+            Debug.Log("Enemy is ready for new input");
             transform.parent.GetComponent<EnemyAI>().Ready();
         }
     }
@@ -69,7 +72,7 @@ public class UnitAnimator : MonoBehaviour
     //check if something was hit
     public void Check4Hit()
     {
-
+        
         //check if the player has hit something
         if (isplayer)
         {
@@ -180,40 +183,39 @@ public class UnitAnimator : MonoBehaviour
         Destroy(transform.parent.gameObject);
     }
 
-    ////camera shake
-    //public void CamShake(float intensity)
-    //{
-    //    CamShake camShake = Camera.main.GetComponent<CamShake>();
-    //    if (camShake != null)
-    //        camShake.Shake(intensity);
-    //}
+    //camera shake
+    public void CamShake(float intensity)
+    {
+        CamShake camShake = Camera.main.GetComponent<CamShake>();
+        if (camShake != null)
+            camShake.Shake(intensity);
+    }
+
+    //spawn a projectile
+    public void SpawnProjectile(string name)
+    {
+
+        PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
+        if (playerCombat)
+        {
+
+            //find a custom spawn position, if there is any. Otherwise use the weapon hand as spawn position
+            Vector3 spawnPos = playerCombat.weaponBone.transform.position;
+            ProjectileSpawnPos customSpawnPos = playerCombat.weaponBone.GetComponentInChildren<ProjectileSpawnPos>();
+            if (customSpawnPos) spawnPos = customSpawnPos.transform.position;
+
+            //spawn projectile at spawn position
+            GameObject projectilePrefab = GameObject.Instantiate(Resources.Load(name), spawnPos, Quaternion.identity) as GameObject;
+            if (!projectilePrefab) return;
+
+            //set projectile to current direction
+            Projectile projectileComponent = projectilePrefab.GetComponent<Projectile>();
+            if (projectileComponent)
+            {
+                projectileComponent.direction = playerCombat.currentDirection;
+                Weapon currentWeapon = playerCombat.GetCurrentWeapon();
+                if (currentWeapon != null) projectileComponent.SetDamage(playerCombat.GetCurrentWeapon().damageObject);
+            }
+        }
+    }
 }
-
-//    //spawn a projectile
-//    public void SpawnProjectile(string name)
-//    {
-
-//        PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
-//        if (playerCombat)
-//        {
-
-//            //find a custom spawn position, if there is any. Otherwise use the weapon hand as spawn position
-//            Vector3 spawnPos = playerCombat.weaponBone.transform.position;
-//            ProjectileSpawnPos customSpawnPos = playerCombat.weaponBone.GetComponentInChildren<ProjectileSpawnPos>();
-//            if (customSpawnPos) spawnPos = customSpawnPos.transform.position;
-
-//            //spawn projectile at spawn position
-//            GameObject projectilePrefab = GameObject.Instantiate(Resources.Load(name), spawnPos, Quaternion.identity) as GameObject;
-//            if (!projectilePrefab) return;
-
-//            //set projectile to current direction
-//            Projectile projectileComponent = projectilePrefab.GetComponent<Projectile>();
-//            if (projectileComponent)
-//            {
-//                projectileComponent.direction = playerCombat.currentDirection;
-//                Weapon currentWeapon = playerCombat.GetCurrentWeapon();
-//                if (currentWeapon != null) projectileComponent.SetDamage(playerCombat.GetCurrentWeapon().damageObject);
-//            }
-//        }
-//    }
-//}

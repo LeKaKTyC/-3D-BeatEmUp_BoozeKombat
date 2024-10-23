@@ -31,6 +31,10 @@ public class InputManager : MonoBehaviour
     void Start()
     {
 
+        //automatically enable touch controls on IOS or android
+#if UNITY_IOS || UNITY_ANDROID
+			inputType = INPUTTYPE.TOUCHSCREEN;
+#endif
     }
 
     public static void DirectionEvent(Vector2 dir, bool doubleTapActive)
@@ -40,8 +44,12 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+
         //use keyboard
         if (inputType == INPUTTYPE.KEYBOARD) KeyboardControls();
+
+        //use joypad
+        if (inputType == INPUTTYPE.JOYPAD) JoyPadControls();
 
     }
 
@@ -71,10 +79,10 @@ public class InputManager : MonoBehaviour
             //convert keyboard direction keys to x,y values (every frame)
             if (Input.GetKey(inputControl.key))
             {
-                if (inputControl.Action == "Left") x = 1f;
-                else if (inputControl.Action == "Right") x = -1f;
-                else if (inputControl.Action == "Up") y = -1;
-                else if (inputControl.Action == "Down") y = 1;
+                if (inputControl.Action == "Left") x = -1f;
+                else if (inputControl.Action == "Right") x = 1f;
+                else if (inputControl.Action == "Up") y = 1;
+                else if (inputControl.Action == "Down") y = -1;
             }
 
             //defend key exception (checks the defend state every frame)
@@ -85,41 +93,41 @@ public class InputManager : MonoBehaviour
         DirectionEvent(new Vector2(x, y), doubleTapState);
     }
 
-    ////void JoyPadControls()
-    //{
-    //    if (onInputEvent == null) return;
+    void JoyPadControls()
+    {
+        if (onInputEvent == null) return;
 
-    //    //on Joypad button press
-    //    foreach (InputControl inputControl in joypadControls)
-    //    {
-    //        if (Input.GetKeyDown(inputControl.key)) onInputEvent(inputControl.Action, BUTTONSTATE.PRESS);
+        //on Joypad button press
+        foreach (InputControl inputControl in joypadControls)
+        {
+            if (Input.GetKeyDown(inputControl.key)) onInputEvent(inputControl.Action, BUTTONSTATE.PRESS);
 
-    //        //defend key exception (checks the defend state every frame)
-    //        if (inputControl.Action == "Defend") defendKeyDown = Input.GetKey(inputControl.key);
-    //    }
+            //defend key exception (checks the defend state every frame)
+            if (inputControl.Action == "Defend") defendKeyDown = Input.GetKey(inputControl.key);
+        }
 
-    //    //get Joypad  direction axis
-    //    float x = Input.GetAxis("Joypad Left-Right");
-    //    float y = Input.GetAxis("Joypad Up-Down");
+        //get Joypad  direction axis
+        float x = Input.GetAxis("Joypad Left-Right");
+        float y = Input.GetAxis("Joypad Up-Down");
 
-    //    //send a direction event
-    //    DirectionEvent(new Vector2(x, y).normalized, false);
-    //}
+        //send a direction event
+        DirectionEvent(new Vector2(x, y).normalized, false);
+    }
 
-    ////this function is called when a touch screen button is pressed
-    //public void OnTouchScreenInputEvent(string action, BUTTONSTATE buttonState)
-    //{
-    //    onInputEvent(action, buttonState);
+    //this function is called when a touch screen button is pressed
+    public void OnTouchScreenInputEvent(string action, BUTTONSTATE buttonState)
+    {
+        onInputEvent(action, buttonState);
 
-    //    //defend exception
-    //    if (action == "Defend") defendKeyDown = (buttonState == BUTTONSTATE.PRESS);
-    //}
+        //defend exception
+        if (action == "Defend") defendKeyDown = (buttonState == BUTTONSTATE.PRESS);
+    }
 
-    ////this function is used for the touch screen thumb-stick
-    //public void OnTouchScreenJoystickEvent(Vector2 joystickDir)
-    //{
-    //    DirectionEvent(joystickDir.normalized, false);
-    //}
+    //this function is used for the touch screen thumb-stick
+    public void OnTouchScreenJoystickEvent(Vector2 joystickDir)
+    {
+        DirectionEvent(joystickDir.normalized, false);
+    }
 
     //returns true if a key double tap is detected
     bool DetectDoubleTap(string action)

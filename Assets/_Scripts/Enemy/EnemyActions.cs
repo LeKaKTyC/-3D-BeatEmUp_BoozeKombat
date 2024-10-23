@@ -86,7 +86,7 @@ public class EnemyActions : MonoBehaviour
     };
 
     //list of states where the player can be hit
-    public List<CHARACTERSTATES> HitableStates = new List<CHARACTERSTATES> {
+    private List<CHARACTERSTATES> HitableStates = new List<CHARACTERSTATES> {
         CHARACTERSTATES.IDLE,
         CHARACTERSTATES.WALK,
         CHARACTERSTATES.ATTACK,
@@ -152,7 +152,7 @@ public class EnemyActions : MonoBehaviour
 
     //physics update
     public void OnFixedUpdate()
-    {
+    {   
         if (updateVelocity)
         {
             rb.velocity = fixedVelocity;
@@ -173,7 +173,7 @@ public class EnemyActions : MonoBehaviour
     //Attack
     public void ATTACK()
     {
-
+        
         //don't attack when player is jumping
         var playerMovement = target.GetComponent<PlayerMovement>();
         if (!AttackPlayerAirborne && playerMovement != null && playerMovement.jumpInProgress)
@@ -185,7 +185,7 @@ public class EnemyActions : MonoBehaviour
         {
 
             //init
-            enemyState = CHARACTERSTATES.ATTACK;
+            enemyState = CHARACTERSTATES.ATTACK;          
             Move(Vector3.zero, 0f);
             LookAtTarget(target.transform);
             TurnToDir(currentDirection);
@@ -193,9 +193,9 @@ public class EnemyActions : MonoBehaviour
             //pick random attack
             if (PickRandomAttack) AttackCounter = Random.Range(0, AttackList.Length);
 
-            //play animation
-            animator.SetAnimatorTrigger(AttackList[AttackCounter].animTrigger);
-
+                //play animation
+                animator.SetAnimatorTrigger(AttackList[AttackCounter].animTrigger);
+            
             //go to the next attack in the list
             if (!PickRandomAttack)
             {

@@ -34,6 +34,7 @@ public class EnemyAI : EnemyActions, IDamagable<DamageObject>
 
     void FixedUpdate()
     {
+
         OnFixedUpdate();
     }
 
@@ -44,7 +45,7 @@ public class EnemyAI : EnemyActions, IDamagable<DamageObject>
 
     void Update()
     {
-
+        
         //do nothing when there is no target or when AI is disabled
         if (target == null || !enableAI)
         {
@@ -89,6 +90,7 @@ public class EnemyAI : EnemyActions, IDamagable<DamageObject>
                 if (Time.time - lastAttackTime > attackInterval)
                 {
                     ATTACK();
+                    animator.Check4Hit();
                 }
                 else
                 {

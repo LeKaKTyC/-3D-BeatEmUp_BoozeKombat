@@ -123,7 +123,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
     void OnEnable()
     {
         InputManager.onInputEvent += OnInputEvent;
-        InputManager.onDirectionInputEvent += OnDirectionInputEvent;
+        InputManager.onDirectionInputEvent += OnDirectionInputEvent;    
     }
 
     void OnDisable()
@@ -160,7 +160,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
 
     void Update()
     {
-
+        
         //the player is colliding with the ground
         if (animator) isGrounded = animator.animator.GetBool("isGrounded");
 
@@ -209,7 +209,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
     #region Combat Input Events
     //combat input event
     private void OnInputEvent(string action, BUTTONSTATE buttonState)
-    {
+    {  
         if (AttackStates.Contains(playerState.currentState) && !isDead)
         {
 
@@ -238,7 +238,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
 
             //use an weapon
             if (action == "Punch" && buttonState == BUTTONSTATE.PRESS && isGrounded && currentWeapon != null)
-            {
+            {               
                 useCurrentWeapon();
                 return;
             }
@@ -297,7 +297,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
             if (action == "Punch" && buttonState == BUTTONSTATE.PRESS && !isGrounded)
             {
                 if (JumpKickData.animTrigger.Length > 0)
-                {
+                {                 
                     doAttack(JumpKickData, CHARACTERSTATES.JUMPKICK, "Kick");
                     StartCoroutine(JumpKickInProgress());
                 }
@@ -329,7 +329,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
                 {
                     attackNum = 0;
                 }
-
+                
                 doAttack(KickCombo[attackNum], CHARACTERSTATES.KICK, "Kick");
                 return;
             }
@@ -353,6 +353,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
 
     private void doAttack(DamageObject damageObject, CHARACTERSTATES state, string inputAction)
     {
+        animator.Check4Hit();
         Debug.Log("PLAYER IS PERFORMING ATTACK");
         animator.SetAnimatorTrigger(damageObject.animTrigger);
         playerState.SetState(state);
@@ -540,7 +541,8 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
 
     //we are hit
     public void Hit(DamageObject d)
-    {
+    {   
+
         Debug.Log("Player was hit! Damage: " + d.damage);
         //check if we can get hit again
         if (Time.time < LastHitTime + hitThreshold) return;
@@ -555,8 +557,8 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
         //check if we are in a hittable state
         if (HitableStates.Contains(playerState.currentState))
         {
-            CancelInvoke();
-
+            //CancelInvoke();
+            
             ////camera Shake
             //CamShake camShake = Camera.main.GetComponent<CamShake>();
             //if (camShake != null) camShake.Shake(.1f);
@@ -573,7 +575,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
             }
 
             //we are hit
-            UpdateHitCounter();
+            UpdateHitCounter();        
             LastHitTime = Time.time;
 
             //show hit effect
@@ -604,6 +606,7 @@ public class PlayerCombat : MonoBehaviour, IDamagable<DamageObject>
             int i = Random.Range(1, 3);
             animator.SetAnimatorTrigger("Hit" + i);
             SetVelocity(Vector3.zero);
+            animator.Check4Hit();
             playerState.SetState(CHARACTERSTATES.HIT);
 
             //add a small force from the impact
