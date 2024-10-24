@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3279866870679383783
 Transform:
   m_ObjectHideFlags: 0
@@ -70,7 +70,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664972408095191531}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 35ddc4dbd3d601f46bb44e75a3c033a3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -82,7 +82,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.29
   m_Height: 1.46
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
   hitZRange: 1
   defendChance: 0
   hitRecoveryTime: 0.4
-  standUpTime: 1.2
+  standUpTime: 2
   canDefendDuringAttack: 0
   AttackPlayerAirborne: 0
   canHitEnemies: 0
@@ -130,8 +130,8 @@ MonoBehaviour:
   lookaheadDistance: 0
   ignoreCliffs: 0
   KnockdownTimeout: 0
-  KnockdownUpForce: 5
-  KnockbackForce: 4
+  KnockdownUpForce: 3
+  KnockbackForce: 3
   HitLayerMask:
     serializedVersion: 2
     m_Bits: 512

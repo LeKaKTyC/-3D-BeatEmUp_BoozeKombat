@@ -264,7 +264,7 @@ public class EnemyActions : MonoBehaviour
             GlobalAudioPlayer.PlaySFXAtPosition(d.hitSFX, transform.position);
 
             //hit particle effect
-            ShowHitEffectAtPosition(new Vector3(transform.position.x, d.inflictor.transform.position.y + d.collHeight, transform.position.z));
+            //ShowHitEffectAtPosition(new Vector3(transform.position.x, d.inflictor.transform.position.y + d.collHeight, transform.position.z));
 
             //camera Shake
             //CamShake camShake = Camera.main.GetComponent<CamShake>();
